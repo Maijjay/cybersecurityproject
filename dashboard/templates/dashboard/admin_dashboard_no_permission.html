@@ -1,0 +1,15 @@
+{% if messages %}
+    <div class="alert alert-danger">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<h1>Admin Dashboard</h1>
+
+<div class="alert alert-danger">
+    <p>You do not have permission to access the admin dashboard.</p>
+</div>
+
+<a href="/">Go back to home</a>

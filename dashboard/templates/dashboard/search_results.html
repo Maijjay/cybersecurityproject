@@ -1,0 +1,23 @@
+{% if messages %}
+    <div class="alert alert-danger">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<h1>Search Results</h1>
+
+{% if results %}
+    <ul>
+        {% for result in results %}
+            <li>
+                <strong>{{ result.title }}</strong>: {{ result.content }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+
+<a href="/">Back to home</a>
