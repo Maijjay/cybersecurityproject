@@ -50,8 +50,8 @@ def register_view(request):
         
             User.objects.create(username=username, password=password)
 
-        # 4. Fix is to user create_user() instead of create(), because this hashes the password automatically.
-        # User.objects.create_user(username=username, password=password)
+            # 4. Fix is to user create_user() instead of create(), because this hashes the password automatically.
+            # User.objects.create_user(username=username, password=password)
 
         except ValidationError as e:
             messages.error(request, f"Error: {e}")
