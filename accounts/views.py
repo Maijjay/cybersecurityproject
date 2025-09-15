@@ -9,10 +9,22 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+
+        try:
+            user = User.objects.get(username=username)
+            if user.password == password:
+                login(request, user)
+                return redirect('/')
+            else:
+                messages.error(request, 'Invalid credentials')
+        except User.DoesNotExist:
+            messages.error(request, 'Invalid credentials')
+        # 4. Fix 2/2 uses authenticate that checks a password that is correctly hashed
+        # user = authenticate(request, username=username, password=password)
+        
         if user is not None:
             login(request, user)
-            next_url = request.GET.get('next', '/')  # Jos 'next' on annettu, mene siihen
+            next_url = request.GET.get('next', '/')
             return redirect(next_url)
         else:
             messages.error(request, 'Invalid credentials')
@@ -50,7 +62,8 @@ def register_view(request):
         
             User.objects.create(username=username, password=password)
 
-            # 4. Fix is to user create_user() instead of create(), because this hashes the password automatically.
+            # 4. 1/2 Fix is to user create_user() instead of create(), because this hashes the password automatically.
+            # Other part of this flaws fix is in login_view()
             # User.objects.create_user(username=username, password=password)
 
         except ValidationError as e:

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,13 +20,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
+
+# 3. Security Misconfiguration - when DEBUG is true, it can expose sensitive information such as stack traces and envioinment variables etc.
+# Also SECRET_KEY cannot be hard coded in production as this is also a very serious security flaw.
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-kxd-34yb+@_q3baa6-_d(tiu-a&3&)$!#r1mh89q^ds*8=p-$4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# 3. Fix is to change DEBUG to false for production and get the SECRET_KEY from enviroiment variables
+# DEBUG = False
+# SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
